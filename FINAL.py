@@ -62,7 +62,7 @@ event_date date not null
 )               
 ''')
 
-print('Tables Created : \n1. Tasks \n2. Expense \n3. Events \n')
+print('Tables Created : \n1. Tasks \n2. Expense \n3. Events \n4. Notes \n')
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -188,7 +188,7 @@ def view_all_tasks():
 
 def viewTaskBySubject():
     print("\nYou chose 'View Tasks by Subject'\n")
-    cursor.execute(f"select subject from tasks ")
+    cursor.execute("select distinct subject from tasks")
     data1 = cursor.fetchall()
 
     i=1
@@ -203,7 +203,8 @@ def viewTaskBySubject():
 
     if len(data) > 0:
         print()
-        view_tasks()
+        for i1 in data :
+            print('ID -',i1[0],'  ||  Title -',i1[1],'  ||  Subject -',i1[2],'  ||  Due Date -',i1[3],'  ||  Status -',i1[4])
     else :
         print('Task subject',subj,'doesn\'t exists')
 
@@ -211,6 +212,9 @@ def viewPendingTasks():
     print("\nYou chose 'View Pending Tasks'\n")
     cursor.execute("select * from tasks where status = 'Not_Done'")
     data = cursor.fetchall()
+
+    for i1 in data :
+            print('ID -',i1[0],'  ||  Title -',i1[1],'  ||  Subject -',i1[2],'  ||  Due Date -',i1[3],'  ||  Status -',i1[4])
 
 def viewTaskStats():
     print("\nYou chose 'View Task Statistics'\n")
@@ -251,7 +255,7 @@ def task_viewer():
         ui12 = input('Enter your choice (1,2,3,4,5) : ')
         if ui12.isdigit() :
             ui12 = int(ui12)
-            if ui12 in [1,2,3,4,5,6] :
+            if ui12 in [1,2,3,4,5] :
                 print('\n-----------------------------------\n')
                 print('_'*100)
 
@@ -363,6 +367,10 @@ def viewNotes():
     print("\nYou chose 'View Notes'\n")
     print('-------------------------------------\n')
 
+    if len(data1) == 0 :
+        print('No Notes Added !!')
+        return
+
     cursor.execute('select title from notes')
     data2 = cursor.fetchall()
 
@@ -392,6 +400,10 @@ def editNotes():
     data1 = cursor.fetchall()
     print("\nYou chose 'Edit a Note'\n")
     print('-------------------------------------\n')
+
+    if len(data1) == 0 :        
+        print('No Notes Added !!')
+        return
 
     cursor.execute('select title from notes')
     data2 = cursor.fetchall()
@@ -441,6 +453,10 @@ def deleteNotes():
 
     cursor.execute('select title from notes')
     data2 = cursor.fetchall()
+
+    if len(data2) == 0 :
+        print('No Notes Added !!')
+        return  
 
     ni1 = 1
     for row1 in data2 :
@@ -689,6 +705,10 @@ def viewEvent():
     cursor.execute('select title,event_date from events')
     data = cursor.fetchall()
 
+    if len(data) == 0 :
+        print('No Events Added !!')
+        return
+
     from datetime import datetime
 
     for row in data :
@@ -707,6 +727,10 @@ def cancelEvent():
     print("\nYou chose 'Cancel an Event'\n")
     cursor.execute('select title from events')
     data2 = cursor.fetchall()
+
+    if len(data2) == 0 :
+        print('No Events Added !!')
+        return
 
     nu1 = 1
     for row in data2 :
@@ -729,6 +753,10 @@ def rescheduleEvent():
     print("\nYou chose 'Reschedule an Event'\n")
     cursor.execute('select title from events')
     data2 = cursor.fetchall()
+
+    if len(data2) == 0 :
+        print('No Events Added !!')
+        return
 
     nu1 = 1
     for row in data2 :
