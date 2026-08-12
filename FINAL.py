@@ -12,12 +12,14 @@ cursor = mycon.cursor()
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
+
 cursor.execute('create database if not exists student')
 print('_'*100)
 print("\nDatabase 'Student' created successfully !!\n")
 
 mycon = sqltor.connect(host='localhost',user='root',password=f'{pa}',database='student')
 cursor = mycon.cursor()
+
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
