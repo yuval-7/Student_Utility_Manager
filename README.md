@@ -330,7 +330,7 @@ This project is intentionally designed as a simple CLI-based student utility app
 
 ---
 
-## 🔮 Future Improvements
+## 🔮 Future Improvements that could be made
 
 Possible future versions could include:
 
